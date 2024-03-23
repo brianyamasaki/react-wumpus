@@ -1,0 +1,22 @@
+[
+  {
+    "question": "The answer is A",
+    "choices": ["one", "two", "three", "four"],
+    "answer": 0
+  },
+  {
+    "question": "The answer is B",
+    "choices": ["one", "two", "three", "four"],
+    "answer": 1
+  },
+  {
+    "question": "The answer is C",
+    "choices": ["one", "two", "three", "four"],
+    "answer": 2
+  },
+  {
+    "question": "The answer is D",
+    "choices": ["one", "two", "three", "four"],
+    "answer": 3
+  }
+]
