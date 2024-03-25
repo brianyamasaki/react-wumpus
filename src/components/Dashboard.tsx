@@ -1,19 +1,26 @@
-import type { GameDisplay } from "../logic/controller";
+import Controller, { GameDisplay, GameInit } from "../logic/controller";
+
+import './Dashboard.css';
 
 type Props = {
   info: GameDisplay;
+  controller: Controller;
 }
+const Dashboard = ({info, controller}: Props) => {
 
-
-const Dashboard = ({info}: Props) => {
+  const moveButtons = (choices: number[]) => {
+    return choices.map((room, i) => (
+      <button key={i} onClick={() => controller.moveToRoom(room)}>Move to {room}</button>
+    ))
+  }
 
   return (
     <div>
-      <img src="./demo-cave.svg" style={{width:'50%'}}/>
+      <img src="./demo-cave.svg" alt="Map of Dungeon" />
       <h2>You're in room {info.playerRoom}</h2>
       <ul>
         <li>
-          Tunnels to {info.moveChoices.join(', ')}
+          {moveButtons(info.moveChoices)}
         </li>
         <li>{info.warnings.join(', ')}</li>
         <li>Coins: {info.coins}</li>

@@ -44,19 +44,21 @@ export default class Controller {
     }
   }
 
-  buyArrows() {
+  buyArrows(count:number) {
+    alert(`buy arrows ${count}`);
 
   }
 
   shootArrows() {
+    alert(`shoot arrow`);
 
   }
 
-  moveRooms() {
-
+  moveToRoom(iroom:number) {
+    this.player.setCurrentRoom(iroom);
   }
 
   buySecret() {
-
+    alert(`buy secret`);
   }
 }
