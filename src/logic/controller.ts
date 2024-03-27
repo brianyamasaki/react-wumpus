@@ -1,7 +1,9 @@
 import Map from './map';
 import Player from './player';
 import Hazards from './hazards';
+import Wumpus from './wumpus';
 import Trivia from './trivia';
+import { GameEvent } from './events';
 
 export type GameInit = {
   playerRoom: number;
@@ -23,18 +25,21 @@ export default class Controller {
   private map:Map;
   private player:Player;
   private hazards:Hazards;
+  private wumpus:Wumpus;
   private trivia:Trivia;
+  private currentEvent:GameEvent = GameEvent.noEvent;
 
   constructor(gameInit: GameInit) {
     this.map = new Map(gameInit.imap);
     this.player = new Player(gameInit.playerRoom);
     this.hazards = new Hazards(gameInit.pits, gameInit.bats, this.map);
+    this.wumpus = new Wumpus(gameInit.wumpusRoom, this.map);
     this.trivia = new Trivia();
   }
 
   getDisplay():GameDisplay {
     const playerRoom = this.player.getCurrentRoom();
-    const warnings = this.hazards.getWarnings(playerRoom);
+    const warnings = this.hazards.getWarnings(playerRoom).concat(this.wumpus.getWarnings(playerRoom));
     return {
       playerRoom,
       moveChoices:this.map.getTunnels(playerRoom),
@@ -49,13 +54,16 @@ export default class Controller {
 
   }
 
-  shootArrows() {
-    alert(`shoot arrow`);
+  shootArrow(room:number) {
+    alert(`shot arrow into room ${room}`);
 
   }
 
-  moveToRoom(iroom:number) {
-    this.player.setCurrentRoom(iroom);
+  moveToRoom(room:number) {
+    this.player.setCurrentRoom(room);
+    this.player.addCoin();
+    this.player.addTurn();
+    this.currentEvent = this.wumpus.playerEntersRoom(room);
   }
 
   buySecret() {

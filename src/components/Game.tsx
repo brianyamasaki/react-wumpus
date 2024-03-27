@@ -28,13 +28,37 @@ const Game = () => {
     setGameInfo(controller.getDisplay());
   }, []);
 
-  const moveButtons = (choices: number[]) => {
+  const displayWarnings = () => {
+    if (gameInfo.warnings.length > 0) {
+      return (
+        <ul className="warnings">
+          {gameInfo.warnings.map((str,i) => (
+            <li key={str + i}>
+              {str}
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  }
+
+  const roomsDisplay = (choices: number[]) => {
     const moveTo = (room: number) => {
       controller.moveToRoom(room);
       setGameInfo(controller.getDisplay());
     }
+
+    const shootTo = (room: number) => {
+      controller.shootArrow(room);
+      setGameInfo(controller.getDisplay());
+    }
+
     return choices.map((room, i) => (
-      <button key={i} onClick={() => moveTo(room)}>Move to {room}</button>
+      <div className="room">
+        <button key={i} onClick={() => moveTo(room)}>Move to {room}</button>
+        <br />
+        <button key={i} onClick={() => shootTo(room)}>Shoot into {room}</button>
+      </div>
     ))
   }
 
@@ -42,14 +66,17 @@ const Game = () => {
     <div className="game">
       <img src="./demo-cave.svg" alt="Map of Dungeon" />
       <h2>You're in room {gameInfo.playerRoom}</h2>
-      <ul>
-        <li>
-          {moveButtons(gameInfo.moveChoices)}
-        </li>
-        <li>{gameInfo.warnings.join(', ')}</li>
-        <li>Coins: {gameInfo.coins}</li>
-        <li>Arrows: {gameInfo.arrows}</li>
-      </ul>
+      {displayWarnings()}
+      <p>You have access to rooms {gameInfo.moveChoices.join(' and ')}</p>
+      <div className="room-choice">
+        {roomsDisplay(gameInfo.moveChoices)}
+      </div>      
+
+      <div className="purse">
+        <div>Coins: {gameInfo.coins} </div>
+        <div>Arrows: {gameInfo.arrows}</div>
+
+      </div>
     </div>
   )
 }

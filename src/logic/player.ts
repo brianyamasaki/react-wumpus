@@ -7,12 +7,25 @@ export default class Player {
 
   constructor(playerStart:number) {
     this.currentRoom = playerStart;
-    this.score = new Score();
+    this.score = new Score(0, 3);
   }
 
   setCurrentRoom(room:number) {
     this.currentRoom = room;
   }
+
+  addTurn() {
+    this.score.addTurn();
+  }
+
+  addCoin() {
+    this.score.addCoins();
+  }
+
+  addArrows(count:number) {
+    this.score.addArrows(count);
+  }
+
   getCurrentRoom() {
     return this.currentRoom;
   }

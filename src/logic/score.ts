@@ -1,7 +1,12 @@
 export default class Score {
-  private coins = 0;
-  private arrows = 3;
+  private coins:number;
+  private arrows:number;
   private cturns = 0;
+
+  constructor(coins:number, arrows:number) {
+    this.coins = coins;
+    this.arrows = arrows;
+  }
 
   addCoins (count?:number) {
       this.coins += typeof count === 'number' ? count : 1;

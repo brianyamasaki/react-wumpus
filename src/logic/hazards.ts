@@ -11,9 +11,9 @@ export default class Hazards {
     this.map = map;
   }
 
-  getWarnings(iroom:number):string[] {
+  getWarnings(room:number):string[] {
     const warnings:string[] = [];
-    const roomTunnels = this.map.getTunnels(iroom);
+    const roomTunnels = this.map.getTunnels(room);
     roomTunnels.forEach((ir) => {
       if (this.pits.includes(ir)) {
         warnings.push("I feel a draft");
