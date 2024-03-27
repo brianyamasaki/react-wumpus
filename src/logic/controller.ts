@@ -19,6 +19,8 @@ export type GameDisplay = {
   warnings: string[];
   coins:number;
   arrows:number;
+  state: GameEvent;
+  moves: number;
 }
 
 export default class Controller {
@@ -27,7 +29,7 @@ export default class Controller {
   private hazards:Hazards;
   private wumpus:Wumpus;
   private trivia:Trivia;
-  private currentEvent:GameEvent = GameEvent.noEvent;
+  private state:GameEvent = GameEvent.noEvent;
 
   constructor(gameInit: GameInit) {
     this.map = new Map(gameInit.imap);
@@ -45,25 +47,25 @@ export default class Controller {
       moveChoices:this.map.getTunnels(playerRoom),
       warnings,
       coins: this.player.getCoins(),
-      arrows: this.player.getArrows()
+      arrows: this.player.getArrows(),
+      state: this.state,
+      moves: this.player.getMoves()
     }
   }
 
   buyArrows(count:number) {
-    alert(`buy arrows ${count}`);
+    alert(`TBD - buy arrows ${count}`);
 
   }
 
   shootArrow(room:number) {
-    alert(`shot arrow into room ${room}`);
+    alert(`TBD - shoot arrow into room ${room}`);
 
   }
 
   moveToRoom(room:number) {
     this.player.setCurrentRoom(room);
-    this.player.addCoin();
-    this.player.addTurn();
-    this.currentEvent = this.wumpus.playerEntersRoom(room);
+    this.state = this.wumpus.playerEntersRoom(room);
   }
 
   buySecret() {

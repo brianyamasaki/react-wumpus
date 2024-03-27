@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import Controller, { GameDisplay, GameInit } from "../logic/controller";
 import './Game.css';
+import { GameEvent } from "../logic/events";
 
 const init:GameInit = {
   playerRoom: 1,
@@ -15,7 +16,9 @@ const giInit: GameDisplay = {
   moveChoices: [],
   warnings:[],
   coins:0,
-  arrows: 3
+  arrows: 3,
+  state: GameEvent.noEvent,
+  moves: 0
 };
 
 const Game = () => {
@@ -54,10 +57,11 @@ const Game = () => {
     }
 
     return choices.map((room, i) => (
-      <div className="room">
-        <button key={i} onClick={() => moveTo(room)}>Move to {room}</button>
+      <div className="room" key={i}>
+        <h3>Room {room}</h3>
+        <button onClick={() => moveTo(room)}>Move to {room}</button>
         <br />
-        <button key={i} onClick={() => shootTo(room)}>Shoot into {room}</button>
+        <button onClick={() => shootTo(room)}>Shoot into {room}</button>
       </div>
     ))
   }
@@ -75,7 +79,7 @@ const Game = () => {
       <div className="purse">
         <div>Coins: {gameInfo.coins} </div>
         <div>Arrows: {gameInfo.arrows}</div>
-
+        <div>Moves: {gameInfo.moves}</div>
       </div>
     </div>
   )

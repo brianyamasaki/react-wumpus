@@ -42,4 +42,12 @@ export default class Score {
   arrowCount() {
     return this.arrows;
   }
+  
+  addMove() {
+    this.cturns += 1;
+  }
+
+  moveCount() {
+    return this.cturns;
+  }
 }

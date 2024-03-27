@@ -12,13 +12,7 @@ export default class Player {
 
   setCurrentRoom(room:number) {
     this.currentRoom = room;
-  }
-
-  addTurn() {
     this.score.addTurn();
-  }
-
-  addCoin() {
     this.score.addCoins();
   }
 
@@ -36,5 +30,9 @@ export default class Player {
 
   getArrows() {
     return this.score.arrowCount();
+  }
+
+  getMoves() {
+    return this.score.moveCount();
   }
 }
