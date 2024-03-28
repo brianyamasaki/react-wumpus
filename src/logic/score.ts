@@ -2,14 +2,16 @@ export default class Score {
   private coins:number;
   private arrows:number;
   private cturns = 0;
+  private bank:CoinBank;
 
   constructor(coins:number, arrows:number) {
     this.coins = coins;
     this.arrows = arrows;
+    this.bank = new CoinBank(100);
   }
 
-  addCoins (count?:number) {
-      this.coins += typeof count === 'number' ? count : 1;
+  addCoins (count:number) {
+    this.coins += this.bank.getCoins(count);
   }
 
   loseCoins (count:number) {
@@ -49,5 +51,19 @@ export default class Score {
 
   moveCount() {
     return this.cturns;
+  }
+}
+
+class CoinBank {
+  private bank:number;
+
+  constructor(count:number) {
+    this.bank = count;
+  }
+
+  getCoins(count: number):number {
+    const available = Math.min(count, this.bank);
+    this.bank -= available;
+    return available;
   }
 }

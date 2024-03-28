@@ -1,4 +1,5 @@
 import Map from './map';
+import GameError, { GError } from './gameErrors';
 
 export default class Hazards {
   private pits:number[];
@@ -9,6 +10,13 @@ export default class Hazards {
     this.pits = pits;
     this.bats = bats;
     this.map = map;
+  }
+
+  playerEntersRoom(room:number) {
+    if (this.bats.includes(room)) {
+      //bat moves you.
+      throw new GameError('A bat has moved you', GError.movedByBat, this.map.getRandomRoom());
+    }
   }
 
   getWarnings(room:number):string[] {

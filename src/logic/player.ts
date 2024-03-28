@@ -12,8 +12,12 @@ export default class Player {
 
   setCurrentRoom(room:number) {
     this.currentRoom = room;
+  }
+
+  moveToCurrentRoom(room:number) {
+    this.currentRoom = room;
     this.score.addTurn();
-    this.score.addCoins();
+    this.score.addCoins(1);
   }
 
   addArrows(count:number) {

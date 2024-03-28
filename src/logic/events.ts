@@ -1,11 +1,10 @@
-export enum GameEvent  {
-  noEvent,
+export enum GameMode  {
+  normal,
   wumpusBattle,
   pitBattle,
-  batTransport,
-  coinNeeded,
   arrowsPurchased,
   secretPurchased,
   wumpusDefeated,
-  eatenByWumpus
+  eatenByWumpus,
+  outOfCoins
 }

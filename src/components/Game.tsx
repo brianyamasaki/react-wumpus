@@ -1,7 +1,10 @@
-import { useState, useRef, useEffect } from "react";
-import Controller, { GameDisplay, GameInit } from "../logic/controller";
+import { useRef, createContext, useState } from "react";
+import Controller, { GameInit } from "../logic/controller";
+import Dashboard from "./Dashboard";
+import GameOver from './GameOver';
+import TriviaBattle from './TriviaBattle';
 import './Game.css';
-import { GameEvent } from "../logic/events";
+import { GameMode } from "../logic/events";
 
 const init:GameInit = {
   playerRoom: 1,
@@ -11,77 +14,38 @@ const init:GameInit = {
   imap:0
 };
 
-const giInit: GameDisplay = {
-  playerRoom: 1,
-  moveChoices: [],
-  warnings:[],
-  coins:0,
-  arrows: 3,
-  state: GameEvent.noEvent,
-  moves: 0
-};
-
 const Game = () => {
-
-  const [ gameInfo, setGameInfo] = useState(giInit);
+  const GameModeContext = createContext(GameMode.normal)
+  const [ gameMode, setGameMode ] = useState(GameMode.normal);
   const controllerRef = useRef(new Controller(init));
   const controller = controllerRef.current;
 
-  useEffect(() => {
-    setGameInfo(controller.getDisplay());
-  }, []);
-
-  const displayWarnings = () => {
-    if (gameInfo.warnings.length > 0) {
-      return (
-        <ul className="warnings">
-          {gameInfo.warnings.map((str,i) => (
-            <li key={str + i}>
-              {str}
-            </li>
-          ))}
-        </ul>
-      )
-    }
+  const onChangeMode = (md:GameMode) => { 
+    setGameMode(md)
   }
 
-  const roomsDisplay = (choices: number[]) => {
-    const moveTo = (room: number) => {
-      controller.moveToRoom(room);
-      setGameInfo(controller.getDisplay());
-    }
+  controller.setChangeFn(onChangeMode);
 
-    const shootTo = (room: number) => {
-      controller.shootArrow(room);
-      setGameInfo(controller.getDisplay());
-    }
 
-    return choices.map((room, i) => (
-      <div className="room" key={i}>
-        <h3>Room {room}</h3>
-        <button onClick={() => moveTo(room)}>Move to {room}</button>
-        <br />
-        <button onClick={() => shootTo(room)}>Shoot into {room}</button>
-      </div>
-    ))
+  const chooseDisplay = () => {
+    switch(gameMode) {
+      case GameMode.normal:
+        return <Dashboard controller={controller}/>;
+      case GameMode.eatenByWumpus:
+      case GameMode.outOfCoins:
+        return <GameOver />
+      case GameMode.pitBattle:
+      case GameMode.wumpusBattle:
+        return <TriviaBattle controller={controller} />;
+    }
   }
 
   return (
-    <div className="game">
-      <img src="./demo-cave.svg" alt="Map of Dungeon" />
-      <h2>You're in room {gameInfo.playerRoom}</h2>
-      {displayWarnings()}
-      <p>You have access to rooms {gameInfo.moveChoices.join(' and ')}</p>
-      <div className="room-choice">
-        {roomsDisplay(gameInfo.moveChoices)}
-      </div>      
-
-      <div className="purse">
-        <div>Coins: {gameInfo.coins} </div>
-        <div>Arrows: {gameInfo.arrows}</div>
-        <div>Moves: {gameInfo.moves}</div>
+    <GameModeContext.Provider value={gameMode} >
+      <div className="game">
+        {chooseDisplay()}
       </div>
-    </div>
+    </GameModeContext.Provider>
   )
 }
 

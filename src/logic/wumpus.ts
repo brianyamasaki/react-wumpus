@@ -1,5 +1,5 @@
 import Map from './map';
-import { GameEvent } from './events';
+import GameError, {GError} from './gameErrors';
 
 export default class Wumpus {
   private currentRoom: number;
@@ -14,12 +14,11 @@ export default class Wumpus {
     return this.currentRoom;
   }
 
-  playerEntersRoom(room: number): GameEvent {
+  playerEntersRoom(room: number) {
     if (room === this.currentRoom) {
       // Player has entered Wumpus Room
-      return GameEvent.wumpusBattle;
+      throw new GameError('Wumpus Encounter', GError.encounterWumpus);
     }
-    return GameEvent.noEvent;
   }
 
   getWarnings(playerRoom:number):string[] {

@@ -1,6 +1,36 @@
 img {
   width: 50%;
+  max-width: 30rem;
 }
-button {
+.room button {
   margin: 0.5rem;
+}
+
+ul.warnings {
+  padding: 0;
+  list-style: none;
+}
+
+.room-choice {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.room {
+  border: 1px solid white;
+}
+
+.purse {
+  margin:2rem 0;
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 1.5rem;
+}
+
+.purse div {
+  padding: 2rem;
 }

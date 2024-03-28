@@ -1,32 +1,64 @@
-import Controller, { GameDisplay, GameInit } from "../logic/controller";
-
+import { useState } from "react";
+import Controller from "../logic/controller";
 import './Dashboard.css';
 
 type Props = {
-  info: GameDisplay;
   controller: Controller;
 }
-const Dashboard = ({info, controller}: Props) => {
 
-  const moveButtons = (choices: number[]) => {
-    return choices.map((room, i) => (
-      <button key={i} onClick={() => controller.moveToRoom(room)}>Move to {room}</button>
-    ))
+const Dashboard = ({controller}:Props) => {
+
+  const [info, setInfo ] = useState(controller.getDisplay());
+  const displayWarnings = () => {
+    if (info.warnings.length > 0) {
+      return (
+        <ul className="warnings">
+          {info.warnings.map((str,i) => (
+            <li key={str + i}>
+              {str}
+            </li>
+          ))}
+        </ul>
+      )
+    }
   }
 
+  const roomsDisplay = (choices: number[]) => {
+    const moveTo = (room: number) => {
+      controller.moveToRoom(room);
+      setInfo(controller.getDisplay());
+    }
+
+    const shootTo = (room: number) => {
+      controller.shootArrow(room);
+      setInfo(controller.getDisplay());
+    }
+
+    return choices.map((room, i) => (
+      <div className="room" key={i}>
+        <h3>Room {room}</h3>
+        <button onClick={() => moveTo(room)}>Move to {room}</button>
+        <br />
+        <button onClick={() => shootTo(room)}>Shoot into {room}</button>
+      </div>
+    ))
+  }
   return (
-    <div>
+    <>
       <img src="./demo-cave.svg" alt="Map of Dungeon" />
       <h2>You're in room {info.playerRoom}</h2>
-      <ul>
-        <li>
-          {moveButtons(info.moveChoices)}
-        </li>
-        <li>{info.warnings.join(', ')}</li>
-        <li>Coins: {info.coins}</li>
-        <li>Arrows: {info.arrows}</li>
-      </ul>
-    </div>
+      {displayWarnings()}
+      <p>You have access to rooms {info.moveChoices.join(' and ')}</p>
+      <div className="room-choice">
+        {roomsDisplay(info.moveChoices)}
+      </div>      
+
+      <div className="purse">
+        <div>Coins: {info.coins} </div>
+        <div>Arrows: {info.arrows}</div>
+        <div>Moves: {info.moves}</div>
+      </div>
+    </>
   )
 }
 
