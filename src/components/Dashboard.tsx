@@ -52,6 +52,10 @@ const Dashboard = ({controller}:Props) => {
       <div className="room-choice">
         {roomsDisplay(info.moveChoices)}
       </div>      
+      <div className="purchase">
+        <button onClick={() => controller.buyArrows(2)}>Purchase Arrows</button>
+        <button onClick={() => controller.buySecret()}>Purchase a secret</button>
+      </div>
 
       <div className="purse">
         <div>Coins: {info.coins} </div>

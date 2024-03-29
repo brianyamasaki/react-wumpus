@@ -6,6 +6,7 @@ import { GameMode } from '../logic/events';
 import './TriviaBattle.css';
 
 type Props = {
+  title: string;
   controller: Controller;
   mdBattle: GameMode;
 }
@@ -16,7 +17,7 @@ enum TriviaState {
   lost
 };
 
-const TriviaBattle = ({controller, mdBattle}:Props) => {
+const TriviaBattle = ({title, controller, mdBattle}:Props) => {
   const [ triviaQuestion, setTriviaQuestion ] = useState(emptyTriviaQuestion);
   const [ triviaState, setTriviaState ] = useState(TriviaState.normal);
   const [ correctAnswers, setCorrectAnswers ] = useState(0);
@@ -104,7 +105,7 @@ const TriviaBattle = ({controller, mdBattle}:Props) => {
   
   return (
     <div className='trivia-battle'>
-      <h3>Trivia Battle Goes Here</h3>
+      <h3>{title}</h3>
       {renderTriviaQuestion()}
     </div>
   )

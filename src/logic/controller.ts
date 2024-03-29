@@ -80,14 +80,14 @@ export default class Controller {
   }
 
   shootArrow(room:number) {
-    alert(`TBD - shoot arrow into room ${room}`);
-
+    this.wumpus.shotArrow(room);
   }
 
   moveToRoom(room:number) {
-    this.player.setCurrentRoom(room);
+    this.player.moveToCurrentRoom(room);
     try {
       this.wumpus.playerEntersRoom(room);
+      this.hazards.playerEntersRoom(room);
     }
     catch(error) {
       if (error instanceof GameError) {
@@ -98,6 +98,7 @@ export default class Controller {
             break;
           case GError.fallenInPit:
             this.changeGameMode(GameMode.pitBattle);
+            this.trivia = new Trivia(2, 3);
             break;
           case GError.eatenByWumpus:
             this.changeGameMode(GameMode.eatenByWumpus);
@@ -105,6 +106,7 @@ export default class Controller {
           case GError.movedByBat:
             if (error.nextRoom) {
               this.player.setCurrentRoom(error.nextRoom);
+              alert(`A Bat has moved you to room ${error.nextRoom}`);
             }
             break;
           case GError.outOfCoins:

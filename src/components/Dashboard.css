@@ -8,6 +8,8 @@ img {
 
 ul.warnings {
   padding: 0;
+}
+ul.warnings li {
   list-style: none;
 }
 
@@ -22,13 +24,16 @@ ul.warnings {
   border: 1px solid white;
 }
 
+.purchase button {
+  margin: 1rem;
+}
+
 .purse {
-  margin:2rem 0;
   display:flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 1rem;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
 }
 
 .purse div {

@@ -21,6 +21,12 @@ export default class Wumpus {
     }
   }
 
+  shotArrow(room:number) {
+    if (this.currentRoom === room) {
+      alert('TBD - You have killed the Wumpus')
+    }
+  }
+
   lostBattle() {
     this.currentRoom = this.map.moveToRandomRoom(this.currentRoom, 2,4);
   }

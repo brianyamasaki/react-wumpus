@@ -17,6 +17,9 @@ export default class Hazards {
       //bat moves you.
       throw new GameError('A bat has moved you', GError.movedByBat, this.map.getRandomRoom());
     }
+    if (this.pits.includes(room)) {
+      throw new GameError('You have fallen into a pit', GError.fallenInPit);
+    }
   }
 
   getWarnings(room:number):string[] {
