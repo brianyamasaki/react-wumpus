@@ -1,21 +1,21 @@
 [
   {
-    "question": "The answer is A",
+    "question": "The answer is one",
     "choices": ["one", "two", "three", "four"],
     "answer": 0
   },
   {
-    "question": "The answer is B",
+    "question": "The answer is two",
     "choices": ["one", "two", "three", "four"],
     "answer": 1
   },
   {
-    "question": "The answer is C",
+    "question": "The answer is three",
     "choices": ["one", "two", "three", "four"],
     "answer": 2
   },
   {
-    "question": "The answer is D",
+    "question": "The answer is four",
     "choices": ["one", "two", "three", "four"],
     "answer": 3
   }

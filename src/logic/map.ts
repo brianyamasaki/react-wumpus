@@ -5,6 +5,10 @@ const maps = [
   map30_1
 ];
 
+const randInRange = (min:number, max:number):number => {
+  return Math.floor(Math.random() * (max - min + 1) + 1);
+}
+
 export default class Map {
   private map:number[][];
   
@@ -12,17 +16,35 @@ export default class Map {
     this.map = maps[imap];
   }
 
-  getTunnels(iroom:number): number[] {
-    return this.map[iroom-1].filter((val) => val > 0);
+  getTunnels(room:number): number[] {
+    return this.map[room-1].filter((val) => val > 0);
   }
 
-  areRoomsClose(iroom1:number, iroom2:number):boolean {
-    const room1Tunnels = this.getTunnels(iroom1);
-    return room1Tunnels.includes(iroom2);
+  areRoomsClose(room1:number, room2:number):boolean {
+    const room1Tunnels = this.getTunnels(room1);
+    return room1Tunnels.includes(room2);
   }
 
   getRandomRoom() {
-    return Math.trunc(Math.random() * this.map.length);
+    return Math.floor(Math.random() * this.map.length);
+  }
+
+  moveToRandomRoom(room:number, min:number, max:number): number {
+    const roomsToMove = randInRange(min, max);
+    let prevRoom = room;
+    let curRoom = room;
+    for (let i = roomsToMove; i > 0; i -= 1) {
+      // tunnels excluding previous tunnel
+      const tunnels = this.getTunnels(curRoom).filter(val => val !== prevRoom);
+      // choose tunnel
+      prevRoom = curRoom;
+      if (tunnels.length === 1) {
+        curRoom = tunnels[0];
+      } else {
+        curRoom = tunnels[randInRange(0,tunnels.length - 1)];
+      }
+    }
+    return curRoom;
   }
 }
 

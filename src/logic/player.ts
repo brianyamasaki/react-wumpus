@@ -32,6 +32,10 @@ export default class Player {
     return this.score.coinCount();
   }
 
+  loseCoins(count:number) {
+    this.score.loseCoins(count);
+  }
+
   getArrows() {
     return this.score.arrowCount();
   }

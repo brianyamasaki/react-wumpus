@@ -1,0 +1,12 @@
+.trivia-battle {
+  max-width: 20rem;
+  margin: 0 auto;
+}
+ol {
+  text-align: left;
+}
+
+.flexy {
+  display:flex;
+  gap: 1em;
+}

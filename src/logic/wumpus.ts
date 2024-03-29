@@ -21,6 +21,10 @@ export default class Wumpus {
     }
   }
 
+  lostBattle() {
+    this.currentRoom = this.map.moveToRandomRoom(this.currentRoom, 2,4);
+  }
+
   getWarnings(playerRoom:number):string[] {
     const warnings: string[] = [];
     if (this.map.areRoomsClose(playerRoom, this.currentRoom)) {

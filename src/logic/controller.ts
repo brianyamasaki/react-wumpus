@@ -23,6 +23,8 @@ export type GameDisplay = {
   arrows:number;
   state: GameMode;
   moves: number;
+  triviaQuestionsCorrect: number;
+  triviaQuestionsIncorrect: number;
 }
 
 export default class Controller {
@@ -66,7 +68,9 @@ export default class Controller {
       coins: this.player.getCoins(),
       arrows: this.player.getArrows(),
       state: this.state,
-      moves: this.player.getMoves()
+      moves: this.player.getMoves(),
+      triviaQuestionsCorrect: this.trivia ? this.trivia.correctAnswerCount() : 0,
+      triviaQuestionsIncorrect: this.trivia ? this.trivia.incorrectAnswerCount() : 0
     }
   }
 
@@ -121,8 +125,28 @@ export default class Controller {
 
   getTriviaQuestion() : TriviaQuestion {
     if (this.trivia) {
+      this.player.loseCoins(1);
       return this.trivia.randomQuestion();
     }
+    console.error('Triva Object not allocated');
     return emptyTriviaQuestion;
+  }
+
+  triviaAnswer(ichoice:number): GameMode {
+    if (this.trivia) {
+      const result = this.trivia.triviaAnswer(ichoice);
+      switch (this.state) {
+        case GameMode.wumpusBattle:
+          this.wumpus.lostBattle();
+          break;
+        case GameMode.pitBattle:
+          this.player.setCurrentRoom(1);
+          this.changeGameMode(GameMode.normal);
+          break;
+      }
+      return result;
+    }
+    console.error('Trivia Object not allocated');
+    return GameMode.normal;
   }
 }
