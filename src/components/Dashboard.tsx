@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Controller from "../logic/controller";
-import './Dashboard.css';
+import CaveControls from "./CaveControls";
+import './Dashboard.scss';
 
 type Props = {
   controller: Controller;
@@ -23,35 +24,23 @@ const Dashboard = ({controller}:Props) => {
     }
   }
 
-  const roomsDisplay = (choices: number[]) => {
-    const moveTo = (room: number) => {
-      controller.moveToRoom(room);
-      setInfo(controller.getDisplay());
-    }
-
-    const shootTo = (room: number) => {
-      controller.shootArrow(room);
-      setInfo(controller.getDisplay());
-    }
-
-    return choices.map((room, i) => (
-      <div className="room" key={i}>
-        <h3>Room {room}</h3>
-        <button onClick={() => moveTo(room)}>Move to {room}</button>
-        <br />
-        <button onClick={() => shootTo(room)}>Shoot into {room}</button>
-      </div>
-    ))
+  const moveTo = (room: number) => {
+    controller.moveToRoom(room);
+    setInfo(controller.getDisplay());
   }
+
+  const shootTo = (room: number) => {
+    controller.shootArrow(room);
+    setInfo(controller.getDisplay());
+  }
+  
   return (
     <>
-      <img src="./demo-cave.svg" alt="Map of Dungeon" />
-      <h2>You're in room {info.playerRoom}</h2>
+      <div className="side-by-side">
+        <CaveControls info={info} moveToRoom={moveTo} shootToRoom={shootTo} />
+        <img src="./demo-cave.svg" alt="Map of Dungeon" />
+      </div>
       {displayWarnings()}
-      <p>You have access to rooms {info.moveChoices.join(' and ')}</p>
-      <div className="room-choice">
-        {roomsDisplay(info.moveChoices)}
-      </div>      
       <div className="purchase">
         <button onClick={() => controller.buyArrows(2)}>Purchase Arrows</button>
         <button onClick={() => controller.buySecret()}>Purchase a secret</button>

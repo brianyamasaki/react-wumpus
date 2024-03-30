@@ -19,6 +19,10 @@ export default class Map {
   getTunnels(room:number): number[] {
     return this.map[room-1].filter((val) => val > 0);
   }
+  
+  getWalls(room: number): number[] {
+    return this.map[room-1];
+  }
 
   areRoomsClose(room1:number, room2:number):boolean {
     const room1Tunnels = this.getTunnels(room1);

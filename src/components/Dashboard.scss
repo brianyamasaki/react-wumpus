@@ -1,18 +1,18 @@
-img {
-  width: 50%;
-  max-width: 30rem;
-}
 .room button {
   margin: 0.5rem;
 }
 
+.side-by-side {
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
 ul.warnings {
   padding: 0;
+  li {
+    list-style: none;
+  }
 }
-ul.warnings li {
-  list-style: none;
-}
-
 .room-choice {
   display: flex;
   flex-wrap: wrap;

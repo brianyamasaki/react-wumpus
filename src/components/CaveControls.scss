@@ -1,0 +1,64 @@
+.cave-control {
+  display: grid; 
+  grid-template-columns: 1fr 1.5fr 1fr; 
+  grid-template-rows: 20% 1fr 1fr 20%; 
+  gap: 0px 0px; 
+  grid-template-areas: 
+    ". top ."
+    "leftTop hexagon rightTop"
+    "leftBottom hexagon rightBottom"
+    ". bottom ."; 
+  width: 60vw;
+  height: 60vw;
+  margin: 0 auto;
+  .top { 
+    grid-area: top; 
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .leftTop { 
+    grid-area: leftTop; 
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .rightTop { 
+    grid-area: rightTop; 
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .leftBottom { 
+    grid-area: leftBottom; 
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .rightBottom { 
+    grid-area: rightBottom; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  .bottom { 
+    grid-area: bottom; 
+  }
+  .hexagon { 
+    grid-area: hexagon; 
+    background-image: url('room.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    font-size: calc(4vw + 4vh + 2vmin);
+  }
+  button {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.9rem;
+    margin:0.3rem;
+  }
+}

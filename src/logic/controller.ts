@@ -18,6 +18,7 @@ export type GameInit = {
 export type GameDisplay = {
   playerRoom:number;
   moveChoices:number[];
+  walls:number[];
   warnings: string[];
   coins:number;
   arrows:number;
@@ -64,6 +65,7 @@ export default class Controller {
     return {
       playerRoom,
       moveChoices:this.map.getTunnels(playerRoom),
+      walls:this.map.getWalls(playerRoom),
       warnings,
       coins: this.player.getCoins(),
       arrows: this.player.getArrows(),
@@ -80,6 +82,7 @@ export default class Controller {
   }
 
   shootArrow(room:number) {
+    alert('TBD - must consume arrow and change game state');
     this.wumpus.shotArrow(room);
   }
 
